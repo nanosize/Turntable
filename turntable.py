@@ -6,6 +6,7 @@ bl_info = {
    "author": "nao_3dcg",
    "version": (1, 0),
    "blender": (3, 6, 0),
+   "location": "3D View",
    "description": "It automatically creates and animates the turntable.",
    "warning": "",
    "support": "TESTING",
