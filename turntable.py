@@ -1,5 +1,4 @@
 import bpy
-from bpy.types import Panel,Operator
 
 bl_info = {
    "name": "turntable",
@@ -14,7 +13,7 @@ bl_info = {
    "tracker_url": "",
    "category": "animation"
 }
-
+gggggggggggggggggggggggggggggg
 #UI set
 
 class VIEW3D_PT_track_obj(bpy.types.Panel):
@@ -30,30 +29,24 @@ class VIEW3D_PT_track_obj(bpy.types.Panel):
         """difine the layout of panel"""
         row = self.layout.row()
         row.operator("add_set",text ="prepare")
-      
 #----------------------------------------------------------------debug      
 class My_OT_Button(bpy.types.Operator):
     bl_idname = "my.button"
     bl_label = "ボタン"
-  
+
     def execute(self, context):
-        print("押した")
-        return{'FINISHED'}
+        self.layout.operator("szl.button")
 #----------------------------------------------------------------
 
 #make collection 'track' and link with collection
-
 #sync frame and last keflame
 frm = 100
-
 
 #class SimpleOperator(bpy.types.Operator):
     #bl_idname = "object.simple_operator"
    # bl_label = "Tool Name"
-    
-    
+   
 #class add_group(bpy.types.Operator):
-
 class MyButton1(bpy.types.Operator):
     bl_idname = "my.button1"
     bl_label = "select_all"#メニューに表示される名前
@@ -68,17 +61,18 @@ class MyButton1(bpy.types.Operator):
         #add circle
         bpy.ops.curve.primitive_bezier_circle_add(radius=5,location=(0,
         0, 1), scale=(1, 1, 1))
+        
         global circle
+        
         circle = bpy.context.view_layer.objects.active
         circle.name = 'circle'
 
     def add_empty():
         #add empty
         bpy.ops.object.empty_add() 
-        global empty 
+        global emplty 
         empty = bpy.context.view_layer.objects.active
         empty.name = 'focus_target'
-
 
         #add camera
         #get data about add objects
@@ -130,11 +124,7 @@ add_circle()
 add_camera()
 link_collection()
 '''
-
 #bpy.utils.register_class(SimpleOperator)
-
-
-print("createed")
 
 def register():
     bpy.utils.register_class(VIEW3D_PT_track_obj)
@@ -143,5 +133,6 @@ def register():
 def unregister():
     bpy.utils.unregister_class(VIEW3D_PT_track_obj)
     bpy.utils.unregister_class(My_OT_Button)
+    
 if __name__ == "__main__":
     register()
