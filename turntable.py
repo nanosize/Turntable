@@ -26,65 +26,122 @@ class VIEW3D_PT_track_obj(bpy.types.Panel):
     bl_category = "turntable"
     bl_label = "turntable"
 
-    def draw(self, context):
+    def draw(self, context): 
         """difine the layout of panel"""
         row = self.layout.row()
         row.operator("add_set",text ="prepare")
+      
+#----------------------------------------------------------------debug      
+class My_OT_Button(bpy.types.Operator):
+    bl_idname = "my.button"
+    bl_label = "ボタン"
+  
+    def execute(self, context):
+        print("押した")
+        return{'FINISHED'}
 #----------------------------------------------------------------
 
 #make collection 'track' and link with collection
-track_obj = bpy.data.collections.new('track_obj')
-bpy.context.scene.collection.children.link(track_obj)
+
+#sync frame and last keflame
+frm = 100
 
 
-def add_set() : 
-    #add circle
-    bpy.ops.curve.primitive_bezier_circle_add(radius=5,location=(0,
-    0, 1), scale=(1, 1, 1))
-    circle = bpy.context.view_layer.objects.active
-    circle.name = 'circle'
+#class SimpleOperator(bpy.types.Operator):
+    #bl_idname = "object.simple_operator"
+   # bl_label = "Tool Name"
     
-    #add empty
-    bpy.ops.object.empty_add()
-    empty = bpy.context.view_layer.objects.active
-    empty.name = 'focus_target'
+    
+#class add_group(bpy.types.Operator):
 
-    #add camera
-    #get data about add objects
-    #change name
-    bpy.ops.object.camera_add()
-    cam = bpy.context.view_layer.objects.active
-    cam.name = 'cam'
-    #add object constraint follow_path
-    #set target
-    #animate
-    bpy.ops.object.constraint_add(type='FOLLOW_PATH')
-    cam.constraints["Follow Path"].target = circle
-    #bpy.ops.constraint.followpath_path_animate(constraint="Follow     Path", owner='OBJECT')
-    #add object constraint track to
+class MyButton1(bpy.types.Operator):
+    bl_idname = "my.button1"
+    bl_label = "select_all"#メニューに表示される名前
+ 
+    def add_set():
+        global tr_obj
+        tr_obj = bpy.data.collections.new('track_obj')
+        bpy.data.collections['track_obj'].color_tag = 'COLOR_04'
+        bpy.context.scene.collection.children.link(tr_obj)
+        
+    def add_circle():
+        #add circle
+        bpy.ops.curve.primitive_bezier_circle_add(radius=5,location=(0,
+        0, 1), scale=(1, 1, 1))
+        global circle
+        circle = bpy.context.view_layer.objects.active
+        circle.name = 'circle'
 
-    bpy.ops.object.constraint_add(type='TRACK_TO')
-    cam.constraints["Track To"].target = empty
-
-
-    #link with track_collection
-    #should wright exception handling
-
-    track_obj.objects.link(circle)
-    track_obj.objects.link(cam)
-    track_obj.objects.link(empty)
-    bpy.context.scene.collection.objects.unlink(circle)
-    bpy.context.scene.collection.objects.unlink(cam)
-    bpy.context.scene.collection.objects.unlink(empty)
+    def add_empty():
+        #add empty
+        bpy.ops.object.empty_add() 
+        global empty 
+        empty = bpy.context.view_layer.objects.active
+        empty.name = 'focus_target'
 
 
+        #add camera
+        #get data about add objects
+        #change name
+    def add_camera():
+        
+        global cam
+        global scn
+        
+        bpy.ops.object.camera_add()
+        cam = bpy.context.view_layer.objects.active
+        cam.name = 'cam'
+        
+        #add object constraint follow_path
+        #set target
+        #animate
+        bpy.ops.object.constraint_add(type='FOLLOW_PATH')
+        cam.constraints["Follow Path"].target = circle
+        
+        #set start keyflame
+        cam.constraints["Follow Path"].offset = 0
+        cam.constraints["Follow Path"].keyframe_insert("offset",frame=1)
+        #set last keyflame
+        cam.constraints["Follow Path"].offset = 100
+        cam.constraints["Follow Path"].keyframe_insert("offset",frame= frm)
+        #set framerange
+        scn = bpy.context.scene
+        scn.frame_end = frm
+        
+        #add object constraint track to
+        bpy.ops.object.constraint_add(type='TRACK_TO')
+        cam.constraints["Track To"].target = empty 
 
+    def link_collection():
+        #link with track_collection
+        #should wright exception handling
+        tr_obj.objects.link(circle)
+        tr_obj.objects.link(cam)
+        tr_obj.objects.link(empty)
+        bpy.context.scene.collection.objects.unlink(circle)
+        bpy.context.scene.collection.objects.unlink(cam)
+        bpy.context.scene.collection.objects.unlink(empty)
+
+'''
+add_set() 
+add_empty()
+add_empty()
+add_circle()
+add_camera()
+link_collection()
+'''
+
+#bpy.utils.register_class(SimpleOperator)
+
+
+print("createed")
 
 def register():
     bpy.utils.register_class(VIEW3D_PT_track_obj)
+    bpy.utils.register_class(My_OT_Button)
 
 def unregister():
     bpy.utils.unregister_class(VIEW3D_PT_track_obj)
-    
+    bpy.utils.unregister_class(My_OT_Button)
 if __name__ == "__main__":
     register()
