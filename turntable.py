@@ -5,12 +5,11 @@ bl_info = {
    "blender": (3, 6, 0),
    "location": "View3D > turntable",
    "description": "It automatically creates and animates the turntable.",
-   "warning": "this addon is beta",
+   "warning": "TThis add-on is a beta version, so please install at your own risk!",
    "wiki_url": "",
    "tracker_url": "",
    "category": "animation"
 }
-
 
 
 
@@ -33,7 +32,8 @@ class VIEW3D_PT_track_obj(bpy.types.Panel):
 class My_OT_Button(bpy.types.Operator):
     bl_idname = "my.button"
     bl_label = "create"
-
+    icon = "MESH_CUBE"
+    
     def execute(self, context):
         global tr_obj
         tr_obj = bpy.data.collections.new('track_obj')
