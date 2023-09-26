@@ -1,19 +1,21 @@
-import bpy
-from bpy.types import Panel,Operator
-
 bl_info = {
    "name": "turntable",
    "author": "nao_3dcg",
-   "version": (1, 0),
+   "version": (0, 0, 0),
    "blender": (3, 6, 0),
-   "location": "3D View",
+   "location": "View3D > turntable",
    "description": "It automatically creates and animates the turntable.",
-   "warning": "",
-   "support": "TESTING",
+   "warning": "this addon is beta",
    "wiki_url": "",
    "tracker_url": "",
    "category": "animation"
 }
+
+
+
+
+import bpy
+from bpy.types import Panel,Operator
 
 #UI set
 frm = 100
