@@ -2,7 +2,7 @@ bl_info = {
    "name": "turntable",
    "author": "nao_3dcg",
    "version": (0, 0, 0),
-   "blender": (3, 6, 0),
+   "blender": (3, 0, 0),
    "location": "View3D > turntable",
    "description": "It automatically creates and animates the turntable.",
    "warning": "TThis add-on is a beta version, so please install at your own risk!",
@@ -16,11 +16,6 @@ bl_info = {
 import bpy
 from bpy.types import Panel
 
-
-def execude(self,context):
-    global frm
-    bpy.context.scene.frame_set(frm) 
-
 #UI set
 class VIEW3D_PT_track_obj(bpy.types.Panel):
 
@@ -33,21 +28,21 @@ class VIEW3D_PT_track_obj(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         scene = context.scene
-        
 
-        # Create a simple row.
-        layout.label(text=" Simple Row:")
+
+        # Frame
+        layout.label(text="Frame:")
         row = layout.row()
         row.prop(scene, "frame_end")
 
         layout.separator()
         
-        layout.label(text="Create Camera",icon="CAMERA_DATA")
+        #create button
+        layout.label(text="Create Camera:",icon="CAMERA_DATA")
         row = layout.row()
         row.scale_y = 3.0
         row.operator("object.create", text="Create")
         
-
 
 
 
@@ -120,10 +115,12 @@ class  OBJECT_TO_create(bpy.types.Operator):
 def register():
     bpy.utils.register_class(VIEW3D_PT_track_obj)
     bpy.utils.register_class(OBJECT_TO_create)
-    
+    bpy.utils.register_class(EnableDisableAutoSmoothOperator)
+    #bpy.utils.register_class()
 def unregister():
     bpy.utils.unregister_class(VIEW3D_PT_track_obj) 
     bpy.utils.unregister_class(OBJECT_TO_create)
-
+    bpy.utils.unregister_class(EnableDisableAutoSmoothOperator)
+    #bpy.utils.unregister_class()
 if __name__ == "__main__":
     register()
