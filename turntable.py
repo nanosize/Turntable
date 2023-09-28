@@ -11,10 +11,9 @@ bl_info = {
    "category": "animation"
 }
 
-
-
 import bpy
-from bpy.types import Panel
+
+frm = 100
 
 #UI set
 class VIEW3D_PT_track_obj(bpy.types.Panel):
@@ -22,18 +21,14 @@ class VIEW3D_PT_track_obj(bpy.types.Panel):
      #where to add the panel
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
-    
     bl_category = "Turntable"
     bl_label = "Turntable"
+    
     def draw(self, context):
         layout = self.layout
         scene = context.scene
-
-
+        
         # Frame
-        layout.label(text="Frame:")
-        row = layout.row()
-        row.prop(scene, "frame_end")
 
         layout.separator()
         
@@ -42,11 +37,9 @@ class VIEW3D_PT_track_obj(bpy.types.Panel):
         row = layout.row()
         row.scale_y = 3.0
         row.operator("object.create", text="Create")
-        
 
 
-
-
+    
 class  OBJECT_TO_create(bpy.types.Operator):
     bl_idname = "object.create"
     bl_label = "Tool Name"
@@ -111,16 +104,19 @@ class  OBJECT_TO_create(bpy.types.Operator):
         bpy.context.scene.collection.objects.unlink(empty)
         
         return {'FINISHED'} 
-    
+
+
 def register():
     bpy.utils.register_class(VIEW3D_PT_track_obj)
     bpy.utils.register_class(OBJECT_TO_create)
-    bpy.utils.register_class(EnableDisableAutoSmoothOperator)
+    #bpy.utils.register_class()
     #bpy.utils.register_class()
 def unregister():
     bpy.utils.unregister_class(VIEW3D_PT_track_obj) 
     bpy.utils.unregister_class(OBJECT_TO_create)
-    bpy.utils.unregister_class(EnableDisableAutoSmoothOperator)
+    #bpy.utils.unregister_class()
     #bpy.utils.unregister_class()
 if __name__ == "__main__":
     register()
+    
+    
