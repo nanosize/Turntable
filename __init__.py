@@ -161,6 +161,7 @@ def register():
 def unregister():
     bpy.utils.unregister_class(VIEW3D_PT_track_obj) 
     bpy.utils.unregister_class(OBJECT_TO_create)
+    bpy.utils.register_class(OBJECT_delete_objects)
     #bpy.utils.unregister_class()
     #bpy.utils.unregister_class()
 if __name__ == "__main__":
