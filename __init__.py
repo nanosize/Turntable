@@ -6,14 +6,12 @@ bl_info = {
    "location": "View3D > turntable",
    "description": "It automatically creates and animates the turntable.",
    "warning": "This add-on is a beta version, so please install at your own risk!",
-   "wiki_url": "",
+   "wiki_url": "https://github.com/nanosize/turntable/tree/main",
    "tracker_url": "",
    "category": "animation"
 }
 
 import bpy
-
-
 
 #UI set
 class VIEW3D_PT_track_obj(bpy.types.Panel):
