@@ -60,7 +60,7 @@ class  OBJECT_TO_create(bpy.types.Operator):
         
         if not bpy.data.collections.get('turntable'):
             
-            bpy.ops.outliner.item_activate(deselect_all=True)
+            #bpy.ops.outliner.item_activate(deselect_all=True)
  
             tr_obj = bpy.data.collections.new('turntable')
             bpy.data.collections['turntable'].color_tag = 'COLOR_04'
